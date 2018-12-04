@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import Counter from './Counter.js'
+import { connect } from "react-redux"
 
 class CounterGroup extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      counterSum: 0,
+      //counterSum: 0,
       counters: new Array(parseInt (this.props.size)).fill(0).map(() =>{
         return {number: 0, id: new Date().getTime + Math.random() };
       }),
@@ -22,7 +23,11 @@ class CounterGroup extends Component {
   }
 
   increaseUpdateSum = changedNum => {
-    this.setState({ sum: this.state.sum + changedNum});
+    //this.setState({ sum: this.state.sum + changedNum});
+    this.props.dispatch({
+      type: "COUNTERSUM",
+      payload: changedNum
+    });
   }
 
   increaseUpdate = (changedNum, id) => {
@@ -62,7 +67,7 @@ class CounterGroup extends Component {
       <div>
         {this.state.counters.map(counterItem => (
           <Counter
-          //key={new Date().getTime() +Math.random()}
+          key={counterItem.id}
           id={counterItem.id}
           onCounterValueChange = 
           {this.increaseUpdateSum}
@@ -77,7 +82,7 @@ class CounterGroup extends Component {
         Create Counter
         </button>
         {/* {this.state.counterArr.map(() => <Counter onUpdate={this.updateSum}/>)} */}
-        <span>sum: {this.state.sum}</span>
+        <span>sum: {this.props.counterSum}</span>
       </div>
     )
   }
@@ -85,4 +90,9 @@ class CounterGroup extends Component {
 
 
 
-export default CounterGroup;
+//export default CounterGroup;
+const mapStateToProps = state => ({
+  counterSum: state.counterSum
+});
+ connect(mapStateToProps)(CounterGroup)
+ export default connect(mapStateToProps)(CounterGroup);
