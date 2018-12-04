@@ -8,22 +8,22 @@ class Counter extends Component {
     super()
   this.state = {number: 0}
   }
-  incrementNumber = ()=> {
-    this.props.onUpdate(1)
-    this.setState({number: this.state.number +1})
+  incrementNumber = (id)=> {
+    this.props.onIncreased(1, id);
+    this.props.onCounterValueChange(1)
   }
-  decrementNumber = ()=> {
-    this.props.onUpdate(-1)
-    this.setState({number: this.state.number -1})
+  decrementNumber = (id)=> {
+    this.props.onDecreased(1, id)
+    this.props.onCounterValueChange(-1);
   }
 
   render() {
     return (
       <div className="App">
-      <button type="button" onClick = {this.incrementNumber} id="push"> + </button>
+      <button type="button" onClick = {() => this.incrementNumber (this.props.id)} > + </button>
 
-      <span>{this.state.number}</span>  
-      <button type="button" onClick ={this.decrementNumber} id="push"> - </button> 
+      <span>{this.props.counterNum}</span>  
+      <button type="button" onClick ={() => this.decrementNumber (this.props.id)} > - </button>
        
       </div>
     );
