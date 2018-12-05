@@ -20,12 +20,16 @@ class CounterGroup extends Component {
     });
   }
   regenerateCounters =()=> {
-    this.setState({
-      counters: new Array(parseInt(this.refs.countInput.value)).fill(0).map(() =>{
-        return {number: 0, id: new Date().getTime + Math.random() };
-      }),
-      counterSum: 0
+    this.props.dispatch({
+      type: "GENERATE_COUNTERS",
+      payload: parseInt(this.refs.countInput.value)
     });
+    // this.setState({
+    //   counters: new Array(parseInt(this.refs.countInput.value)).fill(0).map(() =>{
+    //     return {number: 0, id: new Date().getTime + Math.random() };
+    //   }),
+    //   counterSum: 0
+    // });
   }
 
   increaseUpdateSum = changedNum => {
